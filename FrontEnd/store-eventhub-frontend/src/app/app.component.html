@@ -1,0 +1,39 @@
+<form [formGroup]="eventForm" (ngSubmit)="submitEvent()">
+  <p>
+    This is part of a demo for a store eventhub. In this first step we submit an event for processing.
+    In actual use, events are published, e.g., after a database transaction has successfully completed.
+    The entire project is available at Github <a href="https://github.com/BramvRiel/Store_EventHub" target="_blank" rel="noopener noreferrer">Bram van Riel's Store EventHub</a>.
+  </p>
+
+  <label for="productNumber">Productnummer:</label>
+  <input id="productNumber" formControlName="productNumber" type="text" />
+  <div *ngIf="eventForm.controls['productNumber'].invalid && eventForm.controls['productNumber'].touched">
+    Ongeldig productnummer (bijv. PROD100A)
+  </div>
+
+  <label for="customerNumber">Klantnummer:</label>
+  <input id="customerNumber" formControlName="customerNumber" type="text" />
+  <div *ngIf="eventForm.controls['customerNumber'].invalid && eventForm.controls['customerNumber'].touched">
+    Ongeldig klantnummer (4 cijfers vereist)
+  </div>
+
+  <label for="eventDateTime">Datum en tijd:</label>
+  <input id="eventDateTime" formControlName="eventDateTime" type="datetime-local" />
+  <div *ngIf="eventForm.controls['eventDateTime'].invalid && eventForm.controls['eventDateTime'].touched">
+    Datum en tijd zijn verplicht
+  </div>
+
+  <label for="eventBody">Event JSON:</label>
+  <textarea id="eventBody" formControlName="eventBody"></textarea>
+  <div *ngIf="eventForm.controls['eventBody'].invalid && eventForm.controls['eventBody'].touched">
+    Ongeldige JSON
+  </div>
+
+  <div class="preset-buttons">
+    <button type="button" (click)="fillPreset('ordered')">Product Besteld</button>
+    <button type="button" (click)="fillPreset('packed')">Product Ingepakt</button>
+    <button type="button" (click)="fillPreset('shipped')">Product Verzonden</button>
+  </div>
+
+  <button type="submit" [disabled]="eventForm.invalid">Verzenden</button>
+</form>
